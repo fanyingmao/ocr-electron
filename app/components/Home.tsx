@@ -1,5 +1,4 @@
 import React,{useCallback}  from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import Image from 'material-ui-image'
 import styles from './Home.css';
 import { Button,TextField,CircularProgress,Select,MenuItem } from '@material-ui/core';
@@ -8,16 +7,20 @@ import {useDropzone} from 'react-dropzone';
 export default function Home(): JSX.Element {
    const [age, setAge] = React.useState('');
    const [img, setImg] = React.useState('');
+
   const handleChange = (event:any) => {
     console.log('Received files: ', event.target.value);
     setAge(event.target.value);
   };
+
   const onDrop = useCallback(acceptedFiles => {
     // Do something with the files
     setImg(acceptedFiles[0].path);
     console.log('Received files: ', acceptedFiles[0].path);
   }, [])
+
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+
   return (
     <div className={styles.container} data-tid="container">
         <TextField
