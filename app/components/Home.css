@@ -12,3 +12,20 @@
 .container a {
   font-size: 1.4rem;
 }
+
+.dropStyles  {
+  width: '300px';
+  height: '300px';
+  position: 'relative';
+  top: '50%';
+  left: '50%';
+  margin: '-150px 0 0 -150px';
+  display: 'flex';
+}
+
+.iconStyles {
+  width: '100px';
+  height: '100px';
+  fill: '#ececec';
+  cursor: 'pointer';
+}
