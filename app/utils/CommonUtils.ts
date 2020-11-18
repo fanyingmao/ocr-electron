@@ -1,6 +1,6 @@
 import { execSync } from 'child_process';
 
-const WinUtilsPath = './resources/windowUtils.exe';
+const WinUtilsPath = '.\\resources\\windowUtils.exe';
 /**
  * 对命令调用promis封装
  * @param cmd 调用命令

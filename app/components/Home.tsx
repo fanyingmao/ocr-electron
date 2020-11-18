@@ -30,7 +30,7 @@ export default function Home(): JSX.Element {
   };
 
   const handleClose = async () => {
-    const res = await CommonUtils.findWindowPHandle('pwd');
+    const res = await CommonUtils.findWindowPHandle('云票助手');
     setOcrRes(res);
     setOpen(false);
   };
