@@ -16,8 +16,10 @@ import {
 } from '@material-ui/core';
 import { useDropzone } from 'react-dropzone';
 import styles from './Home.css';
-import AppConfig from '../../resources/config';
 import CommonUtils from '../utils/CommonUtils';
+// isPackage
+const AppConfig = require('../../resources/config');
+// const AppConfig = require('../../resources/resources/config');
 
 export default function Home(): JSX.Element {
   const [age, setAge] = React.useState(10);
@@ -121,7 +123,7 @@ export default function Home(): JSX.Element {
           <DialogContentText id="alert-dialog-slide-description">
             Let Google help apps determine location. This means sending
             anonymous location data to Google, even when no apps are running.
-            {AppConfig.development.mogodbUri}
+            {AppConfig.mogodbUri}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
