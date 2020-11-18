@@ -1,31 +1,84 @@
 .container {
-  position: absolute;
-  top: 30%;
-  left: 10px;
-  text-align: center;
+  height:100%;
+  width:100%;
+  padding: 10px;
+  position: fixed;
+  /* background-color: blue; */
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content:center
 }
 
-.container h2 {
-  font-size: 5rem;
+.div1 {
+  flex-grow: 1;
+  padding: 10px;
+  margin-top: 10px;
 }
 
-.container a {
-  font-size: 1.4rem;
+.div2 {
+  flex-grow: 1;
+  padding: 10px;
 }
 
-.dropStyles  {
-  width: '300px';
-  height: '300px';
-  position: 'relative';
-  top: '50%';
-  left: '50%';
-  margin: '-150px 0 0 -150px';
-  display: 'flex';
+.div3 {
+  flex-grow: 1;
+  display:flex;
+  padding: 20px;
+  flex-direction: column;
+}
+.div4 {
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
-.iconStyles {
-  width: '100px';
-  height: '100px';
-  fill: '#ececec';
-  cursor: 'pointer';
+.div5 {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.div5 {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+.div6 {
+  display:flex;
+  flex-direction: column;
+  height: 400px;
+  margin-top: 20px;
+  overflow:auto;
+}
+.btn {
+  margin: 10px;
+}
+
+.tf  {
+  height:100%;
+  width:100%;
+}
+
+.imageTxt {
+  margin-top: 10px;
+  border:1px solid darkslategray;
+  border-radius:10px;
+  padding: 10px;
+  color:blue;
+}
+
+.lableTxt {
+  color:blue;
+}
+
+.formControl {
+  width: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.inputItem {
+  width: 100%;
+  margin: 10px;
 }
