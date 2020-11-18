@@ -32,8 +32,8 @@ export default class CommonUtils {
   }
 
   public static getResourcesPath(fileName: string) {
-    // isPackage
-    return `.\\resources\\${fileName}`;
-    // return `.\\resources\\resources\\${fileName}`;
+    return process.env.NODE_ENV === 'development'
+      ? `.\\resources\\${fileName}`
+      : `.\\resources\\resources\\${fileName}`;
   }
 }

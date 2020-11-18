@@ -18,15 +18,16 @@ import { useDropzone } from 'react-dropzone';
 import styles from './Home.css';
 import CommonUtils from '../utils/CommonUtils';
 // isPackage
-const AppConfig = require('../../resources/config');
-// const AppConfig = require('../../resources/resources/config');
+const AppConfig =
+  process.env.NODE_ENV === 'development'
+    ? require('../../resources/config')
+    : require('../../resources/resources/config');
 
 export default function Home(): JSX.Element {
   const [age, setAge] = React.useState(10);
   const [img, setImg] = React.useState('');
   const [open, setOpen] = React.useState(false);
   const [ocrRes, setOcrRes] = React.useState('');
-
   const handleClickOpen = () => {
     setOpen(true);
   };
