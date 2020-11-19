@@ -1,4 +1,6 @@
 import { execSync } from 'child_process';
+import fs from 'fs';
+import IConfig, { IOutRule } from '../../resources/config/IConfig';
 
 /**
  * 对命令调用promis封装
@@ -8,6 +10,8 @@ export default class CommonUtils {
   private static readonly WinUtilsPath = CommonUtils.getResourcesPath(
     'windowUtils.exe'
   );
+
+  public static config: IConfig[];
 
   public static async findWindowPHandle(windowPTitle: string) {
     const res = await execSync(`${CommonUtils.WinUtilsPath} 1 ${windowPTitle}`);
@@ -32,8 +36,40 @@ export default class CommonUtils {
   }
 
   public static getResourcesPath(fileName: string) {
+    let name = '';
+    if (process.env.NODE_ENV !== 'development') {
+      name = fileName.replace(new RegExp('/', 'g'), '\\');
+    } else {
+      name = fileName;
+    }
     return process.env.NODE_ENV === 'development'
-      ? `.\\resources\\${fileName}`
-      : `.\\resources\\resources\\${fileName}`;
+      ? `./resources/${name}`
+      : `.\\resources\\resources\\${name}`;
+  }
+
+  public static async initConfig() {
+    const configPath = CommonUtils.getResourcesPath('config/config.json');
+    const configStr = fs.readFileSync(configPath).toString();
+    this.config = JSON.parse(configStr);
+  }
+
+  public static async openResPath() {
+    if (process.env.NODE_ENV === 'development') {
+      await execSync(`open ${CommonUtils.getResourcesPath('config/')}`);
+    } else {
+      await execSync(`start ${CommonUtils.getResourcesPath('config/')}`);
+    }
+  }
+
+  public static parsingOcr(ocrRes: string, item: IOutRule) {
+    const matchRes = ocrRes.match(new RegExp(item.findRegEx || ''));
+    if (matchRes && matchRes.length > 0) {
+      let res = matchRes[0];
+      if (item.removeRegEx) {
+        res = res.replace(new RegExp(item.removeRegEx, 'g'), '');
+      }
+      return res;
+    }
+    return '';
   }
 }

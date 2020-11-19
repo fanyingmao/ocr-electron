@@ -1,0 +1,103 @@
+[
+  {
+    "templateTitle": "机动车统一发票-摩托车",
+    "windowTitle": "机动车统一发票",
+    "outRule": [
+      {
+        "title": "手机号",
+        "type": 1,
+        "findRegEx": "1[0-9]{10}"
+      },
+      {
+        "title": "姓名",
+        "type": 1,
+        "findRegEx": "姓名.+?\\|",
+        "removeRegEx": "姓名|\\|"
+      },
+      {
+        "title": "身份证号",
+        "type": 1,
+        "findRegEx": "[1-9]\\d{5}(18|19|20|(3\\d))\\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]"
+      },
+      {
+        "title": "车辆名称",
+        "type": 1,
+        "findRegEx": "车辆名称.+?\\|",
+        "removeRegEx": "车辆名称|\\|"
+      },
+      {
+        "title": "车辆型号",
+        "type": 1,
+        "findRegEx": "车辆型号.+?\\|",
+        "removeRegEx": "车辆型号|\\|"
+      },
+      {
+        "title": "车架号",
+        "type": 1,
+        "findRegEx": "车架号.+?\\|",
+        "removeRegEx": "车架号|\\|"
+      },
+      {
+        "title": "单价",
+        "type": 2,
+        "relyTitle": "车辆型号"
+      }
+    ],
+    "inRule": [
+      {
+        "inputIndex": 4,
+        "inputTemplate": "<姓名>"
+      },
+      {
+        "inputIndex": 5,
+        "inputTemplate": "<身份证号>"
+      },
+      {
+        "inputIndex": 6,
+        "inputTemplate": "<车辆名称> <车架号> "
+      }
+    ]
+  },
+  {
+    "templateTitle": "云票助手-电动车",
+    "windowTitle": "机动车统一发票",
+    "outRule": [
+      {
+        "title": "手机号xx",
+        "type": 1,
+        "findRegEx": "^1[0-9]{10}$"
+      },
+      {
+        "title": "姓名",
+        "type": 1,
+        "findRegEx": "姓名.+?\\|",
+        "removeRegEx": "姓名|\\|"
+      },
+      {
+        "title": "身份证号",
+        "type": 1,
+        "findRegEx": "[1-9]\\d{5}(18|19|20|(3\\d))\\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]"
+      },
+      {
+        "title": "车辆名称",
+        "type": 1,
+        "findRegEx": "车辆名称.+?\\|",
+        "removeRegEx": "车辆名称|\\|"
+      }
+    ],
+    "inRule": [
+      {
+        "inputIndex": 4,
+        "inputTemplate": "<姓名>"
+      },
+      {
+        "inputIndex": 5,
+        "inputTemplate": "<身份证号>"
+      },
+      {
+        "inputIndex": 6,
+        "inputTemplate": "<车辆名称> <车架号> "
+      }
+    ]
+  }
+]
