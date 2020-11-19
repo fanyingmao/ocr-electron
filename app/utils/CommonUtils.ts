@@ -1,7 +1,11 @@
 import { execSync } from 'child_process';
 import fs from 'fs';
+import axios from 'axios';
 import IConfig, { IOutRule } from '../../resources/config/IConfig';
 
+const url = require('url');
+
+const gerOcrUrl = 'http://www.devfan.cn:45712/getOcrText';
 /**
  * 对命令调用promis封装
  * @param cmd 调用命令
@@ -71,5 +75,21 @@ export default class CommonUtils {
       return res;
     }
     return '';
+  }
+
+  public static async getOcrRes(imgPath: string) {
+    const bitmap = fs.readFileSync(imgPath);
+    const base64str = bitmap.toString('base64'); // base64编码
+    console.log(base64str);
+    const params = new url.URLSearchParams({
+      image: base64str,
+    });
+    console.log('req start');
+    const response = await axios.post(gerOcrUrl, params.toString());
+    console.log(JSON.stringify(response.data.data));
+    if (response.data.code === 0) {
+      return response.data.data;
+    }
+    throw new Error(response.data.message);
   }
 }
