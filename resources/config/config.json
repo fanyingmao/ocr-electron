@@ -38,6 +38,12 @@
         "removeRegEx": "车架号|\\|"
       },
       {
+        "title": "发动机号",
+        "type": 1,
+        "findRegEx": "\\|[A-Z\\d]{8}\\|",
+        "removeRegEx": "\\|"
+      },
+      {
         "title": "单价",
         "type": 2,
         "relyTitle": "车辆型号"

@@ -247,7 +247,7 @@ export default function Home(): JSX.Element {
           {msg}
         </Alert>
       </Snackbar>
-      <Snackbar open={openI} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={openI} autoHideDuration={10000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="info">
           {msg}
         </Alert>
