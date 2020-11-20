@@ -16,13 +16,17 @@ const asyncExec = async (cmd: string): Promise<string> => {
   return new Promise((resolve, reject) => {
     if (cmd) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      exec(cmd, (err, stdout: string, _stderr: string) => {
-        if (err) {
-          reject(err);
-          return;
+      exec(
+        cmd,
+        { encoding: 'utf8' },
+        (err, stdout: string, _stderr: string) => {
+          if (err) {
+            reject(err);
+            return;
+          }
+          resolve(stdout);
         }
-        resolve(stdout);
-      });
+      );
     }
   });
 };
