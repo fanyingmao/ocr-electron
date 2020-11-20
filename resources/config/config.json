@@ -1,7 +1,8 @@
 [
   {
-    "templateTitle": "摩托车发票",
-    "windowTitle": "机动车统一发票",
+    "templateTitle": "电动车发票",
+    "windowTitle": "云票助手",
+    "delayTime": 500,
     "outRule": [
       {
         "title": "手机号",
@@ -20,59 +21,72 @@
         "findRegEx": "[1-9]\\d{5}(18|19|20|(3\\d))\\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]"
       },
       {
-        "title": "车辆名称",
+        "title": "商标",
         "type": 1,
-        "findRegEx": "车辆名称.+?\\|",
-        "removeRegEx": "车辆名称|\\|"
+        "findRegEx": "商标.+?\\|",
+        "removeRegEx": "商标|\\||:"
       },
       {
-        "title": "车辆型号",
+        "title": "型号",
         "type": 1,
-        "findRegEx": "车辆型号.+?\\|",
-        "removeRegEx": "车辆型号|\\|"
+        "findRegEx": "型号.+?\\|",
+        "removeRegEx": "型号|\\||:"
       },
       {
-        "title": "车架号",
+        "title": "车辆编码",
         "type": 1,
-        "findRegEx": "车架号.+?\\|",
-        "removeRegEx": "车架号|\\|"
+        "findRegEx": "车辆编码.+?\\|",
+        "removeRegEx": "车辆编码|\\||:"
       },
       {
-        "title": "发动机号",
+        "title": "电动机编码",
         "type": 1,
-        "findRegEx": "\\|[A-Z\\d]{8}\\|",
-        "removeRegEx": "\\|"
+        "findRegEx": "电动机编码.+?\\|",
+        "removeRegEx": "电动机编码|\\||:"
       },
       {
         "title": "单价",
         "type": 2,
-        "relyTitle": "车辆型号"
+        "relyTitle": "型号"
+      },
+      {
+        "title": "地址",
+        "type": 2,
+        "relyTitle": "商标"
       }
     ],
     "inRule": [
       {
-        "inputIndex": 4,
+        "inputIndex": 46,
         "inputTemplate": "<姓名>"
       },
       {
-        "inputIndex": 5,
+        "inputIndex": 45,
         "inputTemplate": "<身份证号>"
       },
       {
-        "inputIndex": 6,
-        "inputTemplate": "<车辆名称> <车架号> "
+        "inputIndex": 44,
+        "inputTemplate": "<地址> <手机号>"
+      },
+      {
+        "inputIndex": 37,
+        "inputTemplate": "<商标> <型号>"
+      },
+      {
+        "inputIndex": 0,
+        "inputTemplate": "车辆编码:<车辆编码>\n电动机编码:<电动机编码>"
+      },
+      {
+        "inputIndex": 40,
+        "inputTemplate": "<单价>"
       }
     ]
   },
   {
-    "templateTitle": "电动车发票",
-    "windowTitle": "云票助手",
+    "templateTitle": "摩托车发票",
+    "windowTitle": "机动车销售统一发票",
+    "delayTime": 500,
     "outRule": [
-      {
-        "title": "手机号xx",
-        "type": 1,
-        "findRegEx": "^1[0-9]{10}$"
-      },
       {
         "title": "姓名",
         "type": 1,
@@ -85,30 +99,44 @@
         "findRegEx": "[1-9]\\d{5}(18|19|20|(3\\d))\\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]"
       },
       {
-        "title": "车辆名称",
+        "title": "合格证编号",
         "type": 1,
-        "findRegEx": "车辆名称.+?\\|",
-        "removeRegEx": "车辆名称|\\|"
+        "findRegEx": "\\|[A-Z\\d]{15}\\|",
+        "removeRegEx": "\\|"
       },
       {
         "title": "车架号",
         "type": 1,
         "findRegEx": "车架号.+?\\|",
         "removeRegEx": "车架号|\\|"
+      },
+      {
+        "title": "发动机号",
+        "type": 1,
+        "findRegEx": "\\|[A-Z\\d]{8}\\|",
+        "removeRegEx": "\\|"
       }
     ],
     "inRule": [
       {
-        "inputIndex": 9,
+        "inputIndex": 0,
         "inputTemplate": "<姓名>"
       },
       {
-        "inputIndex": 10,
+        "inputIndex": 1,
         "inputTemplate": "<身份证号>"
       },
       {
-        "inputIndex": 11,
-        "inputTemplate": "<车辆名称> <车架号> "
+        "inputIndex": 12,
+        "inputTemplate": "<发动机号>"
+      },
+      {
+        "inputIndex": 14,
+        "inputTemplate": "<合格证编号>"
+      },
+      {
+        "inputIndex": 7,
+        "inputTemplate": "<车架号>"
       }
     ]
   }

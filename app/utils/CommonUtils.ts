@@ -40,7 +40,7 @@ export default class CommonUtils {
 
   public static async findWindowPHandle(windowPTitle: string) {
     const res = await asyncExec(
-      `${CommonUtils.WinUtilsPath} 1 ${windowPTitle}`
+      `${CommonUtils.WinUtilsPath} 1 、"${windowPTitle}"`
     );
 
     if (!res) {
@@ -63,7 +63,7 @@ export default class CommonUtils {
       throw new Error('未找到对应序号的输入框句柄');
     }
     console.log(`handle:${handle} content:${content}`);
-    await asyncExec(`${CommonUtils.WinUtilsPath} 3 ${handle} ${content}`);
+    await asyncExec(`${CommonUtils.WinUtilsPath} 3 ${handle} "${content}"`);
   }
 
   public static getResourcesPath(fileName: string) {
@@ -145,7 +145,7 @@ export default class CommonUtils {
 
     for (let i = 0; i < templetConfig.inRule.length; i += 1) {
       const item = templetConfig.inRule[i];
-      await CommonUtils.dalyAction(1000);
+      await CommonUtils.dalyAction(templetConfig.delayTime);
       await CommonUtils.inputByHandle(
         handleChildArr[item.inputIndex],
         item.content
