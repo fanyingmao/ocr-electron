@@ -1,6 +1,6 @@
 [
   {
-    "templateTitle": "机动车统一发票-摩托车",
+    "templateTitle": "摩托车发票",
     "windowTitle": "机动车统一发票",
     "outRule": [
       {
@@ -65,8 +65,8 @@
     ]
   },
   {
-    "templateTitle": "云票助手-电动车",
-    "windowTitle": "机动车统一发票",
+    "templateTitle": "电动车发票",
+    "windowTitle": "云票助手",
     "outRule": [
       {
         "title": "手机号xx",
@@ -89,19 +89,25 @@
         "type": 1,
         "findRegEx": "车辆名称.+?\\|",
         "removeRegEx": "车辆名称|\\|"
+      },
+      {
+        "title": "车架号",
+        "type": 1,
+        "findRegEx": "车架号.+?\\|",
+        "removeRegEx": "车架号|\\|"
       }
     ],
     "inRule": [
       {
-        "inputIndex": 4,
+        "inputIndex": 9,
         "inputTemplate": "<姓名>"
       },
       {
-        "inputIndex": 5,
+        "inputIndex": 10,
         "inputTemplate": "<身份证号>"
       },
       {
-        "inputIndex": 6,
+        "inputIndex": 11,
         "inputTemplate": "<车辆名称> <车架号> "
       }
     ]

@@ -1,5 +1,5 @@
 /* eslint-disable no-await-in-loop */
-import { execSync } from 'child_process';
+import { exec } from 'child_process';
 import fs from 'fs';
 import axios from 'axios';
 import IConfig, { IOutRule } from '../../resources/config/IConfig';
@@ -7,10 +7,26 @@ import IConfig, { IOutRule } from '../../resources/config/IConfig';
 const url = require('url');
 
 const gerOcrUrl = 'http://www.devfan.cn:45712/getOcrText';
+
 /**
  * 对命令调用promis封装
  * @param cmd 调用命令
  */
+const asyncExec = async (cmd: string): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    if (cmd) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      exec(cmd, (err, stdout: string, _stderr: string) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve(stdout);
+      });
+    }
+  });
+};
+
 export default class CommonUtils {
   private static readonly WinUtilsPath = CommonUtils.getResourcesPath(
     'windowUtils.exe'
@@ -19,7 +35,10 @@ export default class CommonUtils {
   public static config: IConfig[];
 
   public static async findWindowPHandle(windowPTitle: string) {
-    const res = await execSync(`${CommonUtils.WinUtilsPath} 1 ${windowPTitle}`);
+    const res = await asyncExec(
+      `${CommonUtils.WinUtilsPath} 1 ${windowPTitle}`
+    );
+
     if (!res) {
       throw new Error('未找到对应标题窗口');
     }
@@ -27,7 +46,7 @@ export default class CommonUtils {
   }
 
   public static async getAllchildHandle(windowPHandle: string) {
-    const resJson = await execSync(
+    const resJson = await asyncExec(
       `${CommonUtils.WinUtilsPath} 2 ${windowPHandle}`
     );
     const res = JSON.parse(resJson.toString());
@@ -35,7 +54,7 @@ export default class CommonUtils {
   }
 
   public static async inputByHandle(handle: number, content: string) {
-    const resJson = await execSync(
+    const resJson = await asyncExec(
       `${CommonUtils.WinUtilsPath} 3 ${handle} ${content}`
     );
     const res = JSON.parse(resJson.toString());
@@ -62,9 +81,9 @@ export default class CommonUtils {
 
   public static async openResPath() {
     if (process.env.NODE_ENV === 'development') {
-      await execSync(`open ${CommonUtils.getResourcesPath('config/')}`);
+      asyncExec(`open ${CommonUtils.getResourcesPath('config/')}`);
     } else {
-      await execSync(`start ${CommonUtils.getResourcesPath('config/')}`);
+      asyncExec(`start ${CommonUtils.getResourcesPath('config/')}`);
     }
   }
 

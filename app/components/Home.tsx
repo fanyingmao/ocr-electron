@@ -32,6 +32,7 @@ export default function Home(): JSX.Element {
   const [ocrRes, setOcrRes] = React.useState('');
   const { config } = CommonUtils;
   const [tfItem, setTfItem] = React.useState('');
+
   const listMenuItem = config.map((item: IConfig, index) => (
     <MenuItem value={index} key={item.templateTitle}>
       {item.templateTitle}
@@ -105,46 +106,53 @@ export default function Home(): JSX.Element {
   };
 
   const handleParsing = () => {
-    config[templetIndex].outRule.forEach((item) => {
-      if (item.type === OutRuleType.OCR) {
-        item.content = CommonUtils.parsingOcr(ocrRes, item);
-      } else {
+    try {
+      config[templetIndex].outRule.forEach((item) => {
+        if (item.type === OutRuleType.OCR) {
+          item.content = CommonUtils.parsingOcr(ocrRes, item);
+        } else {
+          const relyItem = getRelyItem(item.relyTitle || '');
+          if (relyItem) {
+            item.content = String(
+              store.get(
+                `input.store${templetIndex}.${relyItem.title}.${relyItem.content}.${item.title}`,
+                ''
+              )
+            );
+          }
+        }
+      });
+
+      setTfItem(`${Date.now()}`);
+    } catch (error) {
+      openAlert(3, `错误：${error.message}`);
+    }
+  };
+
+  const handleInput = async () => {
+    try {
+      storeOutRule.forEach((item) => {
         const relyItem = getRelyItem(item.relyTitle || '');
         if (relyItem) {
           item.content = String(
-            store.get(
+            store.set(
               `input.store${templetIndex}.${relyItem.title}.${relyItem.content}.${item.title}`,
-              ''
+              item.content || ''
             )
           );
         }
-      }
-    });
-
-    setTfItem(`${Date.now()}`);
-  };
-
-  const handleInput = () => {
-    storeOutRule.forEach((item) => {
-      const relyItem = getRelyItem(item.relyTitle || '');
-      if (relyItem) {
-        item.content = String(
-          store.set(
-            `input.store${templetIndex}.${relyItem.title}.${relyItem.content}.${item.title}`,
-            item.content
-          )
-        );
-      }
-    });
-
-    try {
+      });
       openAlert(2, '自动填入数据中。。。');
-      CommonUtils.startInput(config[templetIndex]);
-      CommonUtils.backWindow();
+      await CommonUtils.startInput(config[templetIndex]);
+      await CommonUtils.backWindow();
       openAlert(1, '填入数据完成');
     } catch (error) {
-      CommonUtils.backWindow();
       openAlert(3, `错误：${error.message}`);
+      try {
+        await CommonUtils.backWindow();
+      } catch (error2) {
+        openAlert(3, `错误：${error2.message}`);
+      }
     }
   };
 
