@@ -143,8 +143,10 @@ export default function Home(): JSX.Element {
     try {
       openAlert(2, '自动填入数据中。。。');
       CommonUtils.startInput(config[templetIndex]);
+      CommonUtils.backWindow();
       openAlert(1, '填入数据完成');
     } catch (error) {
+      CommonUtils.backWindow();
       openAlert(3, `错误：${error.message}`);
     }
   };

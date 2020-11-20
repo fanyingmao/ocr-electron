@@ -122,6 +122,9 @@ export default class CommonUtils {
       await CommonUtils.dalyAction(1000);
       CommonUtils.inputByHandle(handleChildArr[item.inputIndex], item.content);
     }
-    // await CommonUtils.findWindowPHandle('');
+  }
+
+  public static async backWindow() {
+    await CommonUtils.findWindowPHandle('OCR自动填表');
   }
 }
