@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import { execSync } from 'child_process';
 import fs from 'fs';
 import axios from 'axios';
@@ -25,16 +26,18 @@ export default class CommonUtils {
     return res.toString();
   }
 
-  public static async getAllchildHandle(windowPHandle: number) {
+  public static async getAllchildHandle(windowPHandle: string) {
     const resJson = await execSync(
-      `${CommonUtils.WinUtilsPath} 1 ${windowPHandle}`
+      `${CommonUtils.WinUtilsPath} 2 ${windowPHandle}`
     );
     const res = JSON.parse(resJson.toString());
     return res;
   }
 
-  public static async inputByHandle(handle: number) {
-    const resJson = await execSync(`${CommonUtils.WinUtilsPath} 1 ${handle}`);
+  public static async inputByHandle(handle: number, content: string) {
+    const resJson = await execSync(
+      `${CommonUtils.WinUtilsPath} 3 ${handle} ${content}`
+    );
     const res = JSON.parse(resJson.toString());
     return res;
   }
@@ -80,16 +83,45 @@ export default class CommonUtils {
   public static async getOcrRes(imgPath: string) {
     const bitmap = fs.readFileSync(imgPath);
     const base64str = bitmap.toString('base64'); // base64编码
-    console.log(base64str);
     const params = new url.URLSearchParams({
       image: base64str,
     });
-    console.log('req start');
     const response = await axios.post(gerOcrUrl, params.toString());
-    console.log(JSON.stringify(response.data.data));
     if (response.data.code === 0) {
       return response.data.data;
     }
     throw new Error(response.data.message);
+  }
+
+  public static async dalyAction(time: number) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve();
+      }, time);
+    });
+  }
+
+  public static async startInput(templetConfig: IConfig) {
+    templetConfig.inRule.forEach((itemIn) => {
+      itemIn.content = itemIn.inputTemplate;
+      templetConfig.outRule.forEach((itemOut) => {
+        itemIn.content = itemIn.content.replace(
+          new RegExp(`<${itemOut.title}>`, 'g'),
+          itemOut.content
+        );
+      });
+    });
+
+    const handleP = await CommonUtils.findWindowPHandle(
+      templetConfig.windowTitle
+    );
+    const handleChildArr = await CommonUtils.getAllchildHandle(handleP);
+
+    for (let i = 0; i < templetConfig.inRule.length; i += 1) {
+      const item = templetConfig.inRule[i];
+      await CommonUtils.dalyAction(1000);
+      CommonUtils.inputByHandle(handleChildArr[item.inputIndex], item.content);
+    }
+    // await CommonUtils.findWindowPHandle('');
   }
 }

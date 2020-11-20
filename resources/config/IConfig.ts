@@ -16,12 +16,14 @@ export interface IOutRule {
   removeRegEx?: string; // OCR类型生效 对查找出来的结果的多余部分通过正则匹配去除
   relyTitle?: string; // STOR类型生效 保存的依赖属性标题，例如 同一型号的产品就会有同样的价格等参数 所以这里就是依赖产品型号来记录价格
 
-  content: string; // 这个不用管
+  content: string; // 这个不用配
 }
 
 export interface IInRule {
   inputIndex: number; // 输入窗口中输入框的句柄排序编号，通过 allInputTest.exe <窗口标题> 可以得到编号
   inputTemplate: string; // 输入文本的模版 会将OutRuleType的title替换为对应值例如   “车架号：<车架号>" 尖括号中的内容会被替换为对应值
+
+  content: string; // 这个不用配
 }
 
 export default interface IConfig {
