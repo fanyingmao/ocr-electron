@@ -2,6 +2,7 @@
 import { exec } from 'child_process';
 import fs from 'fs';
 import axios from 'axios';
+import iconv from 'iconv-lite';
 import IConfig, { IOutRule } from '../../resources/config/IConfig';
 
 const url = require('url');
@@ -13,20 +14,19 @@ const gerOcrUrl = 'http://www.devfan.cn:45712/getOcrText';
  * @param cmd 调用命令
  */
 const asyncExec = async (cmd: string): Promise<string> => {
+  // if (process.env.NODE_ENV !== 'development') {
+  //   cmd = iconv.encode(cmd,'gbk').toString();
+  // }
   return new Promise((resolve, reject) => {
     if (cmd) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      exec(
-        cmd,
-        { encoding: 'utf8' },
-        (err, stdout: string, _stderr: string) => {
-          if (err) {
-            reject(err);
-            return;
-          }
-          resolve(stdout);
+      exec(cmd, { encoding: 'buffer' }, (err, stdout, stderr) => {
+        if (err) {
+          reject(new Error(iconv.decode(Buffer.from(stderr), 'gbk')));
+          return;
         }
-      );
+        resolve(iconv.decode(Buffer.from(stdout), 'gbk'));
+      });
     }
   });
 };
@@ -53,16 +53,17 @@ export default class CommonUtils {
     const resJson = await asyncExec(
       `${CommonUtils.WinUtilsPath} 2 ${windowPHandle}`
     );
+    console.log(`getAllchildHandle:${resJson}`);
     const res = JSON.parse(resJson.toString());
     return res;
   }
 
   public static async inputByHandle(handle: number, content: string) {
-    const resJson = await asyncExec(
-      `${CommonUtils.WinUtilsPath} 3 ${handle} ${content}`
-    );
-    const res = JSON.parse(resJson.toString());
-    return res;
+    if (!handle) {
+      throw new Error('未找到对应序号的输入框句柄');
+    }
+    console.log(`handle:${handle} content:${content}`);
+    await asyncExec(`${CommonUtils.WinUtilsPath} 3 ${handle} ${content}`);
   }
 
   public static getResourcesPath(fileName: string) {
@@ -138,12 +139,17 @@ export default class CommonUtils {
     const handleP = await CommonUtils.findWindowPHandle(
       templetConfig.windowTitle
     );
+    console.log(`handleP:${handleP}`);
+
     const handleChildArr = await CommonUtils.getAllchildHandle(handleP);
 
     for (let i = 0; i < templetConfig.inRule.length; i += 1) {
       const item = templetConfig.inRule[i];
       await CommonUtils.dalyAction(1000);
-      CommonUtils.inputByHandle(handleChildArr[item.inputIndex], item.content);
+      await CommonUtils.inputByHandle(
+        handleChildArr[item.inputIndex],
+        item.content
+      );
     }
   }
 
