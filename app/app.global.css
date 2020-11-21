@@ -8,7 +8,8 @@ body {
   position: relative;
   color: white;
   height: 100vh;
-  background-color: #ececec;
+  background-color: white;
+
   /* background-image: linear-gradient(
     45deg,
     rgba(0, 216, 255, 0.5) 10%,
