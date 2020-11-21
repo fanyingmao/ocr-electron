@@ -40,7 +40,7 @@ export default class CommonUtils {
 
   public static async findWindowPHandle(windowPTitle: string) {
     const res = await asyncExec(
-      `${CommonUtils.WinUtilsPath} 1 、"${windowPTitle}"`
+      `${CommonUtils.WinUtilsPath} 1 "${windowPTitle}"`
     );
 
     if (!res) {

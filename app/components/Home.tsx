@@ -141,9 +141,9 @@ export default function Home(): JSX.Element {
         }
       });
       openAlert(2, '自动填入数据中。。。');
-      // await CommonUtils.startInput(config[templetIndex]);
-      // await CommonUtils.backWindow();
-      // openAlert(1, '填入数据完成');
+      await CommonUtils.startInput(config[templetIndex]);
+      await CommonUtils.backWindow();
+      openAlert(1, '填入数据完成');
     } catch (error) {
       openAlert(3, `错误：${error.message}`);
       try {
