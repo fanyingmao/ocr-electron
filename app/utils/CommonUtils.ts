@@ -59,6 +59,9 @@ export default class CommonUtils {
   }
 
   public static async inputByHandle(handle: number, content: string) {
+    if (content.replace(/(^s*)|(s*$)/g, '').length === 0) {
+      return;
+    }
     if (!handle) {
       throw new Error('未找到对应序号的输入框句柄');
     }
