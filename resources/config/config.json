@@ -74,7 +74,7 @@
       },
       {
         "inputIndex": 0,
-        "inputTemplate": "车辆编码:<车辆编码>\n电动机编码:<电动机编码>"
+        "inputTemplate": "车辆编码:<车辆编码>                   电动机编码:<电动机编码>"
       },
       {
         "inputIndex": 40,
