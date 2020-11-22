@@ -57,6 +57,15 @@ export default class CommonUtils {
     return res;
   }
 
+  public static async getAllchildHandleByTitle(windowPTitle: string) {
+    const resJson = await asyncExec(
+      `${CommonUtils.WinUtilsPath} 4 ${windowPTitle}`
+    );
+    console.log(`getAllchildHandle:${resJson}`);
+    const res = JSON.parse(resJson.toString());
+    return res;
+  }
+
   public static async inputByHandle(handle: number, content: string) {
     if (content.replace(/(^s*)|(s*$)/g, '').length === 0) {
       return;
@@ -138,12 +147,14 @@ export default class CommonUtils {
       });
     });
 
-    const handleP = await CommonUtils.findWindowPHandle(
+    // const handleP = await CommonUtils.findWindowPHandle(
+    //   templetConfig.windowTitle
+    // );
+    // console.log(`handleP:${handleP}`);
+
+    const handleChildArr = await CommonUtils.getAllchildHandleByTitle(
       templetConfig.windowTitle
     );
-    console.log(`handleP:${handleP}`);
-
-    const handleChildArr = await CommonUtils.getAllchildHandle(handleP);
 
     // for (let i = 0; i < templetConfig.inRule.length; i += 1) {
     //   const item = templetConfig.inRule[i];
