@@ -30,7 +30,6 @@ export interface IInRule {
 export default interface IConfig {
   templateTitle: string; // 模版名称
   windowTitle: string; // 输入窗口标题
-  delayTime: number; // 输入延迟
   outRule: IOutRule[]; // 提取文字结果的规则
   inRule: IInRule[]; // 将提取文字输入窗口的规则
 }

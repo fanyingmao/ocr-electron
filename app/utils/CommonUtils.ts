@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import { exec } from 'child_process';
 import fs from 'fs';
 import axios from 'axios';
@@ -146,14 +145,18 @@ export default class CommonUtils {
 
     const handleChildArr = await CommonUtils.getAllchildHandle(handleP);
 
-    for (let i = 0; i < templetConfig.inRule.length; i += 1) {
-      const item = templetConfig.inRule[i];
-      await CommonUtils.dalyAction(templetConfig.delayTime);
-      await CommonUtils.inputByHandle(
-        handleChildArr[item.inputIndex],
-        item.content
-      );
-    }
+    // for (let i = 0; i < templetConfig.inRule.length; i += 1) {
+    //   const item = templetConfig.inRule[i];
+    //   await CommonUtils.inputByHandle(
+    //     handleChildArr[item.inputIndex],
+    //     item.content
+    //   );
+    // }
+    await Promise.all(
+      templetConfig.inRule.map((item) =>
+        CommonUtils.inputByHandle(handleChildArr[item.inputIndex], item.content)
+      )
+    );
   }
 
   public static async backWindow() {

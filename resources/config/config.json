@@ -2,7 +2,6 @@
   {
     "templateTitle": "电动车发票",
     "windowTitle": "云票助手",
-    "delayTime": 0,
     "outRule": [
       {
         "title": "手机号",
@@ -85,7 +84,6 @@
   {
     "templateTitle": "摩托车发票",
     "windowTitle": "机动车销售统一发票",
-    "delayTime": 0,
     "outRule": [
       {
         "title": "姓名",
